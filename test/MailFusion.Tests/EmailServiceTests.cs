@@ -98,9 +98,8 @@ public class EmailServiceTests
         result.Error!.Code.Should().Be(EmailServiceErrors.Codes.InvalidInput);
     }
 
-    private static EmailMessage CreateValidEmailMessage()
-    {
-        return new EmailMessage
+    private static EmailMessage CreateValidEmailMessage() =>
+        new()
         {
             Subject = "Test Subject",
             HtmlBody = "<p>Test Body</p>",
@@ -108,32 +107,27 @@ public class EmailServiceTests
             Sender = CreateValidSender(),
             Recipients = CreateValidRecipients()
         };
-    }
 
-    private static EmailSender CreateValidSender()
-    {
-        return new EmailSender
+    private static EmailSender CreateValidSender() =>
+        new()
         {
             Name = "Test Sender",
             Email = "sender@test.com",
             ReplyEmail = "reply@test.com"
         };
-    }
 
-    private static List<EmailRecipient> CreateValidRecipients()
-    {
-        return [new EmailRecipient { Email = "recipient@test.com", Name = "Test Recipient" }];
-    }
+    private static List<EmailRecipient> CreateValidRecipients() =>
+    [
+        new("recipient@test.com", "Test Recipient")
+    ];
 
-    private static EmailTemplate CreateValidTemplate()
-    {
-        return new EmailTemplate
+    private static EmailTemplate CreateValidTemplate() =>
+        new()
         {
             Subject = "Test Subject",
             HtmlBody = "<p>Test Body</p>",
             PlainTextBody = "Test Body"
         };
-    }
 
     private class TestEmailModel : IEmailTemplateModel
     {

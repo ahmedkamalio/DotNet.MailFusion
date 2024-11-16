@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace MailFusion;
 
 /// <summary>
@@ -209,12 +211,9 @@ public record EmailSender
     /// );
     /// </code>
     /// </example>
+    [SetsRequiredMembers]
     public EmailSender(string email, string name, string? replyEmail = null)
-    {
-        Email = email;
-        Name = name;
-        ReplyEmail = replyEmail ?? email;
-    }
+        => (Email, Name, ReplyEmail) = (email, name, replyEmail ?? email);
 }
 
 /// <summary>
@@ -310,9 +309,6 @@ public record EmailRecipient
     /// );
     /// </code>
     /// </example>
-    public EmailRecipient(string email, string? name = null)
-    {
-        Email = email;
-        Name = name;
-    }
+    [SetsRequiredMembers]
+    public EmailRecipient(string email, string? name = null) => (Email, Name) = (email, name);
 }
