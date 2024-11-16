@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{76BA386D-A54B-4363-B60B-508766BAC70D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailFusion", "src\MailFusion\MailFusion.csproj", "{EE38262B-1818-4B67-B060-5C5690306D93}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{6D91CF5F-B9D4-4ED5-BDB3-7D80C71508B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailFusion.Tests", "test\MailFusion.Tests\MailFusion.Tests.csproj", "{0A6D72AB-A0F2-47FD-946E-BBC942CF572B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F4BB16D5-F5B8-42DF-B6E6-8C46D1212F6C}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\publish.yml = .github\workflows\publish.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE38262B-1818-4B67-B060-5C5690306D93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE38262B-1818-4B67-B060-5C5690306D93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE38262B-1818-4B67-B060-5C5690306D93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE38262B-1818-4B67-B060-5C5690306D93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A6D72AB-A0F2-47FD-946E-BBC942CF572B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A6D72AB-A0F2-47FD-946E-BBC942CF572B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A6D72AB-A0F2-47FD-946E-BBC942CF572B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A6D72AB-A0F2-47FD-946E-BBC942CF572B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EE38262B-1818-4B67-B060-5C5690306D93} = {76BA386D-A54B-4363-B60B-508766BAC70D}
+		{0A6D72AB-A0F2-47FD-946E-BBC942CF572B} = {6D91CF5F-B9D4-4ED5-BDB3-7D80C71508B5}
+	EndGlobalSection
+EndGlobal
