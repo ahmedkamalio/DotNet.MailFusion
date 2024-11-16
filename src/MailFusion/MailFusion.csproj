@@ -7,7 +7,7 @@
         <!-- NuGet Package Metadata -->
         <PackageId>MailFusion</PackageId>
         <Title>.Net MailFusion</Title>
-        <Version>1.0.0</Version>
+        <Version>1.1.0</Version>
         <Authors>Ahmed Kamal</Authors>
         <Description>A modern, flexible email delivery library for .NET that simplifies sending emails through various providers like SendGrid and Amazon SES. Features include templating support with Scriban, HTML/plain-text email formatting, development environment support, comprehensive error handling, and strongly-typed models. Perfect for applications requiring reliable email delivery with provider flexibility and robust template management.</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>

@@ -63,7 +63,7 @@ public class EmailTemplateOptions
     /// </list>
     /// </para>
     /// </remarks>
-    public required string Provider { get; init; }
+    public required string Provider { get; set; }
 
     /// <summary>
     /// Gets or sets the configuration options specific to file-based template storage.
@@ -73,7 +73,7 @@ public class EmailTemplateOptions
     /// These options are only used when Provider is set to "File". For other providers,
     /// this property will be null.
     /// </remarks>
-    public FileTemplateOptions? File { get; init; }
+    public FileTemplateOptions? File { get; set; }
 }
 
 /// <summary>

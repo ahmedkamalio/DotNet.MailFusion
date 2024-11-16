@@ -15,16 +15,20 @@ strongly-typed API.
     - SendGrid
     - Amazon SES
     - Development (console output for testing)
+    - Custom Email provider support
 - 📝 Template Support
     - Scriban template engine integration
     - HTML and plain text support
     - Template caching for performance
     - Strong typing for template models
+    - Custom template engine support
+    - Custom template loader support
 - ⚡ Modern .NET Features
     - Async/await throughout
     - Nullable reference types
     - Record types for immutable data
     - Modern C# features
+    - Builder pattern configuration
 - 🛡️ Robust Error Handling
     - Detailed error information
     - Provider-specific error mapping
@@ -35,6 +39,7 @@ strongly-typed API.
     - Detailed debugging information
     - Comprehensive XML documentation
     - Rich logging support
+    - Sensible defaults
 
 ## Installation
 
@@ -46,9 +51,9 @@ dotnet add package MailFusion
 
 ## Quick Start
 
-### 1. Configure the Email Service
+### 1. Basic Configuration
 
-In your `appsettings.json`:
+The simplest way to get started is with the basic configuration in your `appsettings.json`:
 
 ```json
 {
@@ -61,12 +66,24 @@ In your `appsettings.json`:
 }
 ```
 
-### 2. Register Services
-
-In your `Program.cs` or `Startup.cs`:
+And in your `Program.cs` or `Startup.cs`:
 
 ```csharp
-services.AddConfiguredEmailService(Configuration, Environment);
+services.AddMailFusion(Configuration, Environment);
+```
+
+### 2. Advanced Configuration
+
+MailFusion supports extensive customization through the builder pattern:
+
+```csharp
+services.AddMailFusion(Configuration, Environment, builder =>
+{
+    builder
+        .UseCustomEmailProvider<MyEmailProvider>()
+        .UseCustomTemplateEngine<MyTemplateEngine>()
+        .UseCustomTemplateLoader<MyTemplateLoader>();
+});
 ```
 
 ### 3. Create an Email Template Model
@@ -126,9 +143,11 @@ public class EmailService
 }
 ```
 
-## Provider Configuration
+## Configuration Options
 
-### SendGrid
+### Email Provider Configuration
+
+#### SendGrid
 
 ```json
 {
@@ -141,7 +160,7 @@ public class EmailService
 }
 ```
 
-### Amazon SES
+#### Amazon SES
 
 ```json
 {
@@ -156,7 +175,7 @@ public class EmailService
 }
 ```
 
-### Development Provider
+#### Development Provider
 
 ```json
 {
@@ -171,9 +190,86 @@ public class EmailService
 }
 ```
 
+### Template Configuration
+
+Template configuration is optional. If not specified, MailFusion will use these defaults:
+
+- File-based template provider
+- Templates directory at `{BaseDirectory}/Templates/Email`
+
+To customize template settings:
+
+```json
+{
+  "EmailTemplates": {
+    "Provider": "File",
+    "File": {
+      "TemplatesPath": "path/to/templates"
+    }
+  }
+}
+```
+
+## Custom Implementations
+
+### Custom Email Provider
+
+```csharp
+public class MyEmailProvider : IEmailProvider
+{
+    public async Task<IResult<Unit>> SendEmailAsync(EmailMessage message, CancellationToken cancellationToken = default)
+    {
+        // Custom implementation
+    }
+}
+
+// Registration
+services.AddMailFusion(Configuration, Environment, builder =>
+{
+    builder.UseCustomEmailProvider<MyEmailProvider>();
+});
+```
+
+### Custom Template Engine
+
+```csharp
+public class MyTemplateEngine : IEmailTemplateEngine
+{
+    public async Task<IResult<IEmailTemplate>> LoadTemplateAsync<TModel>(
+        string templateName, TModel model) where TModel : IEmailTemplateModel
+    {
+        // Custom implementation
+    }
+}
+
+// Registration
+services.AddMailFusion(Configuration, Environment, builder =>
+{
+    builder.UseCustomTemplateEngine<MyTemplateEngine>();
+});
+```
+
+### Custom Template Loader
+
+```csharp
+public class MyTemplateLoader : IEmailTemplateLoader
+{
+    public async Task<IResult<(string html, string text)>> LoadTemplateAsync(string templateName)
+    {
+        // Custom implementation
+    }
+}
+
+// Registration
+services.AddMailFusion(Configuration, Environment, builder =>
+{
+    builder.UseCustomTemplateLoader<MyTemplateLoader>();
+});
+```
+
 ## Template System
 
-MailFusion uses Scriban for template processing. Templates should be organized in your project as follows:
+When using the default file-based template system, organize your templates as follows:
 
 ```
 Templates/
@@ -184,19 +280,6 @@ Templates/
       └── order-confirmation/
           ├── order-confirmation.html
           └── order-confirmation.txt
-```
-
-Configure template location in `appsettings.json`:
-
-```json
-{
-  "EmailTemplates": {
-    "Provider": "File",
-    "File": {
-      "TemplatesPath": "Templates/Email"
-    }
-  }
-}
 ```
 
 ### Example Template
