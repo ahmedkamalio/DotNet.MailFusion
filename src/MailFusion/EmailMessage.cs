@@ -20,7 +20,7 @@ namespace MailFusion;
 /// var message = new EmailMessage
 /// {
 ///     Subject = "Welcome to Our Service",
-///     HtmlBody = "<h1>Welcome!</h1><p>Thank you for joining.</p>",
+///     HtmlBody = "&lt;h1&gt;Welcome!&lt;/h1&gt;&lt;p&gt;Thank you for joining.&lt;/p&gt;",
 ///     PlainTextBody = "Welcome!\n\nThank you for joining.",
 ///     Sender = new EmailSender 
 ///     {
@@ -148,6 +148,73 @@ public record EmailSender
     /// </para>
     /// </remarks>
     public required string ReplyEmail { get; init; }
+
+    /// <summary>
+    /// Initializes a new instance of the EmailSender record with default values.
+    /// </summary>
+    /// <remarks>
+    /// This parameterless constructor is provided to support object initialization syntax.
+    /// When using this constructor, all required properties must be set through property initialization.
+    /// </remarks>
+    /// <example>
+    /// Using the parameterless constructor with object initialization:
+    /// <code>
+    /// var sender = new EmailSender
+    /// {
+    ///     Name = "My Service",
+    ///     Email = "noreply@myservice.com",
+    ///     ReplyEmail = "support@myservice.com"
+    /// };
+    /// </code>
+    /// </example>
+    public EmailSender()
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the EmailSender record with the specified sender information.
+    /// </summary>
+    /// <param name="email">The email address used as the sender address ("From" address).</param>
+    /// <param name="name">The display name of the email sender.</param>
+    /// <param name="replyEmail">Optional. The email address for recipients to reply to. If not specified, the sender email will be used.</param>
+    /// <remarks>
+    /// <para>
+    /// This constructor provides a convenient way to create an EmailSender instance
+    /// with the sender's information. The parameter order prioritizes the essential
+    /// email address, while making the reply-to address optional.
+    /// </para>
+    /// <para>
+    /// Usage considerations:
+    /// <list type="bullet">
+    ///   <item><description>The email must be a valid sender address verified with your email provider</description></item>
+    ///   <item><description>The name parameter should be a human-readable display name</description></item>
+    ///   <item><description>If replyEmail is not specified, the main email address will be used for replies</description></item>
+    /// </list>
+    /// </para>
+    /// </remarks>
+    /// <example>
+    /// Creating senders using the constructor:
+    /// <code>
+    /// // Basic usage with same reply address
+    /// var sender1 = new EmailSender("noreply@myservice.com", "My Service");
+    /// 
+    /// // With separate reply-to address
+    /// var sender2 = new EmailSender("noreply@myservice.com", "My Service", "support@myservice.com");
+    /// 
+    /// // With named parameters
+    /// var sender3 = new EmailSender(
+    ///     email: "noreply@myservice.com",
+    ///     name: "My Service",
+    ///     replyEmail: "support@myservice.com"
+    /// );
+    /// </code>
+    /// </example>
+    public EmailSender(string email, string name, string? replyEmail = null)
+    {
+        Email = email;
+        Name = name;
+        ReplyEmail = replyEmail ?? email;
+    }
 }
 
 /// <summary>
@@ -182,4 +249,70 @@ public record EmailRecipient
     /// </para>
     /// </remarks>
     public string? Name { get; init; }
+
+    /// <summary>
+    /// Initializes a new instance of the EmailRecipient record with default values.
+    /// </summary>
+    /// <remarks>
+    /// This parameterless constructor is provided to support object initialization syntax.
+    /// When using this constructor, the required Email property must be set through property initialization.
+    /// The Name property is optional and can be omitted.
+    /// </remarks>
+    /// <example>
+    /// Using the parameterless constructor with object initialization:
+    /// <code>
+    /// var recipient = new EmailRecipient
+    /// {
+    ///     Email = "user@example.com",
+    ///     Name = "John Doe"  // Optional
+    /// };
+    /// </code>
+    /// </example>
+    public EmailRecipient()
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the EmailRecipient record with the specified email address and optional display name.
+    /// </summary>
+    /// <param name="email">The email address of the recipient.</param>
+    /// <param name="name">Optional. The display name of the recipient.</param>
+    /// <remarks>
+    /// <para>
+    /// This constructor provides a convenient way to create an EmailRecipient instance
+    /// with required email and optional display name information. The parameter order
+    /// and optional name parameter make it natural to create recipients with just
+    /// an email address.
+    /// </para>
+    /// <para>
+    /// Important considerations:
+    /// <list type="bullet">
+    ///   <item><description>The email parameter must be a valid email address format</description></item>
+    ///   <item><description>The name parameter defaults to null if not provided</description></item>
+    ///   <item><description>Email service providers will validate the email address format</description></item>
+    ///   <item><description>When name is provided, it improves recipient identification in email clients</description></item>
+    /// </list>
+    /// </para>
+    /// </remarks>
+    /// <example>
+    /// Creating recipients using the constructor:
+    /// <code>
+    /// // With email only
+    /// var recipient1 = new EmailRecipient("user@example.com");
+    /// 
+    /// // With email and display name
+    /// var recipient2 = new EmailRecipient("user@example.com", "John Doe");
+    /// 
+    /// // With named parameters
+    /// var recipient3 = new EmailRecipient(
+    ///     email: "user@example.com",
+    ///     name: "John Doe"
+    /// );
+    /// </code>
+    /// </example>
+    public EmailRecipient(string email, string? name = null)
+    {
+        Email = email;
+        Name = name;
+    }
 }
